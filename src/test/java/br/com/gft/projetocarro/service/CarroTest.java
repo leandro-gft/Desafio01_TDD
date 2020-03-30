@@ -6,8 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.gft.projetocarro.model.Carro;
-import br.com.gft.projetocarro.model.CarroDesligadoException;
+import br.com.gft.projetocarro.model.TanqueVazioOuCarroDesligadoException;
 import br.com.gft.projetocarro.model.CarroJaEstaLigadoException;
+import br.com.gft.projetocarro.model.CarroParadoOuDesligadoException;
 import br.com.gft.projetocarro.model.TanqueCheioException;
 
 public class CarroTest {
@@ -42,7 +43,7 @@ public class CarroTest {
 		carro.abastecer(101);	
 	}
 	
-	@Test(expected = CarroDesligadoException.class)
+	@Test(expected = TanqueVazioOuCarroDesligadoException.class)
 	public void nãoDeveAcelerarSeEstiverDesligado() throws Exception {
 		carro.acelerar();
 	}
@@ -50,8 +51,15 @@ public class CarroTest {
 	@Test
 	public void deveAumentarVelocidadeEm20AoAcelerar() {
 		carro.ligar();
+		carro.abastecer(50);
 		carro.acelerar();
 		assertEquals(20, carro.getVelocidade());
+	}
+	
+	@Test(expected = TanqueVazioOuCarroDesligadoException.class)
+	public void deveAcelerarApenasSeTiverCombustivel() throws Exception {
+		carro.ligar();
+		carro.acelerar();		
 	}
 	
 	@Test
@@ -62,6 +70,34 @@ public class CarroTest {
 		assertEquals(49, carro.getLitrosCombustivel());
 	}
 	
+	@Test(expected = CarroParadoOuDesligadoException.class)
+	public void naoDeveFrearSeEstiverDesligado() throws Exception {
+		carro.setLigado(false);
+		carro.frear();
+	}
+	
+	@Test(expected = CarroParadoOuDesligadoException.class)
+	public void naoDeveFrearSeEstiverComVelocidadeIgualA0() throws Exception {
+		carro.setLigado(true);
+		carro.setVelocidade(0);
+		carro.frear();
+	}
+	
+	@Test
+	public void deveDiminuirVelocidadeEm10AoFrear() throws Exception {
+		carro.ligar();
+		carro.setVelocidade(50);
+		carro.frear();
+		assertEquals(40, carro.getVelocidade());
+	}
+	
+	@Test ()
+	public void devePararSeEstiverComVelocidadeMenorOuIgualA10() throws Exception {
+		carro.setLigado(true);
+		carro.setVelocidade(8);
+		carro.frear();
+		assertEquals(0, carro.getVelocidade());
+	}
 	
 	
 	

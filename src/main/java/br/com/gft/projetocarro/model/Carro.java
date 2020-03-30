@@ -9,6 +9,7 @@ public class Carro {
 	private boolean isLigado;
 	private int litrosCombustivel;
 	private int velocidade;
+
 //	
 //	public Carro() {
 //		super();
@@ -81,28 +82,41 @@ public class Carro {
 	public void setVelocidade(int velocidade) {
 		this.velocidade = velocidade;
 	}
-	
+
 	public void ligar() {
 		if (isLigado() == false) {
 			setLigado(true);
-	} else
-		throw new CarroJaEstaLigadoException();
+		} else
+			throw new CarroJaEstaLigadoException();
 	}
 
 	public void acelerar() {
-		if (isLigado() == true) {
-			setVelocidade(getVelocidade()+20);
-			setLitrosCombustivel(getLitrosCombustivel()-1);
-		} else
-			throw new CarroDesligadoException();
+		if (isLigado() == true && litrosCombustivel > 0) {
+			setVelocidade(getVelocidade() + 20);
+			setLitrosCombustivel(getLitrosCombustivel() - 1);
+		} else {
+			throw new TanqueVazioOuCarroDesligadoException();
 		}
+	}
 
 	public void abastecer(int qtdLitros) {
-		if (qtdLitros<100) {
-		setLitrosCombustivel(qtdLitros);
+		if (qtdLitros < 100) {
+			setLitrosCombustivel(qtdLitros);
 		} else
 			throw new TanqueCheioException();
-				
+
+	}
+
+	public void frear() {
+		if (isLigado() == true && velocidade > 10) {
+			setVelocidade(getVelocidade() - 10);
+		}
+		else if (isLigado() == true && velocidade > 0 && velocidade <= 10 ) {
+			setVelocidade(0);
+		} 
+		else {
+			throw new CarroParadoOuDesligadoException();
+		}
 	}
 
 }

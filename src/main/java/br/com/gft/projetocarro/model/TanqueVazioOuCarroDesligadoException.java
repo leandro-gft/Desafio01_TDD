@@ -1,6 +1,6 @@
 package br.com.gft.projetocarro.model;
 
-public class CarroDesligadoException extends RuntimeException {
+public class TanqueVazioOuCarroDesligadoException extends RuntimeException {
 
 	/**
 	 * 
