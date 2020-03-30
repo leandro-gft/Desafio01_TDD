@@ -1,7 +1,5 @@
 package br.com.gft.projetocarro.model;
 
-import br.com.gft.projetocarro.service.CarroJaEstaLigadoException;
-
 public class Carro {
 
 	private String marca;
@@ -89,6 +87,22 @@ public class Carro {
 			setLigado(true);
 	} else
 		throw new CarroJaEstaLigadoException();
+	}
+
+	public void acelerar() {
+		if (isLigado() == true) {
+			setVelocidade(getVelocidade()+20);
+			setLitrosCombustivel(getLitrosCombustivel()-1);
+		} else
+			throw new CarroDesligadoException();
+		}
+
+	public void abastecer(int qtdLitros) {
+		if (qtdLitros<100) {
+		setLitrosCombustivel(qtdLitros);
+		} else
+			throw new TanqueCheioException();
+				
 	}
 
 }
