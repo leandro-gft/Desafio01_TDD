@@ -1,15 +1,17 @@
 package br.com.gft.projetocarro.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.gft.projetocarro.exceptions.CarroDesligadoException;
+import br.com.gft.projetocarro.exceptions.CarroJaEstaLigadoException;
+import br.com.gft.projetocarro.exceptions.CarroParadoOuDesligadoException;
+import br.com.gft.projetocarro.exceptions.TanqueCheioException;
+import br.com.gft.projetocarro.exceptions.TanqueVazioOuCarroDesligadoException;
 import br.com.gft.projetocarro.model.Carro;
-import br.com.gft.projetocarro.model.TanqueVazioOuCarroDesligadoException;
-import br.com.gft.projetocarro.model.CarroJaEstaLigadoException;
-import br.com.gft.projetocarro.model.CarroParadoOuDesligadoException;
-import br.com.gft.projetocarro.model.TanqueCheioException;
+import br.com.gft.projetocarro.model.Cor;
 
 public class CarroTest {
 
@@ -27,7 +29,7 @@ public class CarroTest {
 	}
 	
 	@Test(expected = CarroJaEstaLigadoException.class)
-	public void deveMostrarExcecaoSeOCarroJaEstiverLigadoAoLigar() throws Exception {
+	public void naoDeveLigarOCarroSeJaEstiverLigado() throws Exception {
 		carro.setLigado(true);
 		carro.ligar();
 	}
@@ -101,22 +103,23 @@ public class CarroTest {
 	
 	@Test
 	public void devePintarOCarro() throws Exception {
-		carro.pintar();
-		
+		carro.setCor(Cor.AZUL);
+		carro.pintar(Cor.AMARELO);
+		assertEquals(Cor.AMARELO, carro.getCor());		
 	}
+	
+	@Test
+	public void deveDesligarOCarro() throws Exception {
+		carro.setLigado(true);
+		carro.desligar();
+		assertEquals(false, carro.isLigado());				
+	}
+	
+	@Test(expected = CarroDesligadoException.class)
+	public void naoDeveDesligarOCarroSeJaEstiverDesligado() throws Exception {
+		carro.setLigado(false);
+		carro.desligar();
+	}
+	
 		
 }
-	
-//	@Test
-//	public void devePermitirAcelerarOCarro() throws Exception {
-//		carro.acelerar(true, 20.0, 1.0);
-//	}
-//	
-//	
-//	
-//	@Test
-//	public void deveAbastecerOCarro() throws Exception {
-//		carro.abastecer(20.0);
-//	}
-//
-//}

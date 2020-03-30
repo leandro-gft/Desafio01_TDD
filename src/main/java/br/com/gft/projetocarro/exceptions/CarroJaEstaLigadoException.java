@@ -1,4 +1,4 @@
-package br.com.gft.projetocarro.model;
+package br.com.gft.projetocarro.exceptions;
 
 public class CarroJaEstaLigadoException extends RuntimeException {
 

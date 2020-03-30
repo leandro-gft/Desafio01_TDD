@@ -1,10 +1,16 @@
 package br.com.gft.projetocarro.model;
 
+import br.com.gft.projetocarro.exceptions.CarroDesligadoException;
+import br.com.gft.projetocarro.exceptions.CarroJaEstaLigadoException;
+import br.com.gft.projetocarro.exceptions.CarroParadoOuDesligadoException;
+import br.com.gft.projetocarro.exceptions.TanqueCheioException;
+import br.com.gft.projetocarro.exceptions.TanqueVazioOuCarroDesligadoException;
+
 public class Carro {
 
 	private String marca;
 	private String modelo;
-	private String cor;
+	private Cor cor;
 	private float km;
 	private boolean isLigado;
 	private int litrosCombustivel;
@@ -43,11 +49,11 @@ public class Carro {
 		this.modelo = modelo;
 	}
 
-	public String getCor() {
+	public Cor getCor() {
 		return cor;
 	}
 
-	public void setCor(String cor) {
+	public void setCor(Cor cor) {
 		this.cor = cor;
 	}
 
@@ -119,10 +125,13 @@ public class Carro {
 		}
 	}
 
-	public void pintar() {
-		
-		// TODO Auto-generated method stub
-		
+	public Cor pintar(Cor cor) {
+		return this.cor = cor;
 	}
 
+	public boolean desligar() {
+		if (isLigado == true) 
+			return isLigado = false;
+		throw new CarroDesligadoException();
+	}
 }
