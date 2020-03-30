@@ -11,28 +11,10 @@ public class Carro {
 	private String marca;
 	private String modelo;
 	private Cor cor;
-	private float km;
 	private boolean isLigado;
 	private int litrosCombustivel;
 	private int velocidade;
-
-//	
-//	public Carro() {
-//		super();
-//	}
-//
-//	public Carro(String marca, String modelo, String cor, float km, boolean isLigado, int litrosCombustivel,
-//			int velocidade) {
-//		super();
-//		this.marca = marca;
-//		this.modelo = modelo;
-//		this.cor = cor;
-//		this.km = km;
-//		this.isLigado = isLigado;
-//		this.litrosCombustivel = litrosCombustivel;
-//		this.velocidade = velocidade;
-//	}
-//
+	
 	public String getMarca() {
 		return marca;
 	}
@@ -55,14 +37,6 @@ public class Carro {
 
 	public void setCor(Cor cor) {
 		this.cor = cor;
-	}
-
-	public float getKm() {
-		return km;
-	}
-
-	public void setKm(float km) {
-		this.km = km;
 	}
 
 	public boolean isLigado() {
@@ -106,23 +80,21 @@ public class Carro {
 	}
 
 	public double abastecer(int qtdLitros) {
-		if (qtdLitros < 100) {
-			return litrosCombustivel += qtdLitros;
-		} else
+		litrosCombustivel += qtdLitros;
+		if (litrosCombustivel < 100) 
+			return litrosCombustivel;
+		else
 			throw new TanqueCheioException();
 
 	}
 
-	public double frear() {
-		if (isLigado() == true && velocidade > 10) {
+	public int frear() {
+		if (isLigado() == true && velocidade > 10) 
 			return velocidade -= 10;
-		}
-		else if (isLigado() == true && velocidade > 0 && velocidade <= 10 ) {
+		else if (isLigado() == true && velocidade > 0 && velocidade <= 10 ) 
 			return velocidade = 0;
-		} 
-		else {
+		else 
 			throw new CarroParadoOuDesligadoException();
-		}
 	}
 
 	public Cor pintar(Cor cor) {
