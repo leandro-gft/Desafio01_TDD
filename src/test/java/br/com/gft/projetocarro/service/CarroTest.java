@@ -99,8 +99,12 @@ public class CarroTest {
 		assertEquals(0, carro.getVelocidade());
 	}
 	
-	
-	
+	@Test
+	public void devePintarOCarro() throws Exception {
+		carro.pintar();
+		
+	}
+		
 }
 	
 //	@Test
